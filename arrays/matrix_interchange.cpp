@@ -6,10 +6,7 @@ int arr[1000][1000];
 void interchange(int r, int c)
 {
     for (int i{0}; i < r; i++)
-    {
         swap(arr[i][0], arr[i][c-1]);
-    }
-    
 
     //Printing the modified matrix
     for (int i = 0; i < r; i++)
