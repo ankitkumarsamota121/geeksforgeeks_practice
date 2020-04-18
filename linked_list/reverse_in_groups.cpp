@@ -110,10 +110,6 @@ struct node *reverse(struct node *head, int k)
     head->next = p;
     head = q;
 
-    // cout << p->data << endl;
-    // cout << q->data << endl;
-    // cout << r->data << endl;
-
     while (p)
     {
         begin = p;
@@ -129,7 +125,6 @@ struct node *reverse(struct node *head, int k)
         l->next = q;
         l = begin;
         begin->next = p;
-        // cout << begin->next << endl;
     }
 
     return head;
