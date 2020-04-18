@@ -87,13 +87,19 @@ Node *deleteNode(Node *head, int x)
 {
     //Your code here
     Node *p = head;
-    Node *q = NULL;
-    for (int i = 0; i < x - 1; i++)
+    // Node *q = NULL;
+    if (x == 1)
+        head = p->next;
+    else
     {
-        q = p;
-        p = p->next;
+        for (int i = 1; i < x-1; i++)
+        {
+            // q = p;
+            p = p->next;
+        }
+        p->next = p->next->next;
+        // delete p;
     }
-    q->next = p->next;
-    delete p;
+    
     return head;
 }
