@@ -160,7 +160,6 @@ void removeTheLoop(Node *head)
     f = start;
     while (f->next != start)
     {
-        cout << 3 << endl;
         f = f->next;
     }
     
