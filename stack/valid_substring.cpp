@@ -21,6 +21,8 @@ int main()
                 st.pop();
                 len += 2;
             }
+            else
+                len = 0;
         }
         cout << len << endl;
     }
