@@ -67,9 +67,10 @@ int QueueStack ::pop()
     int x;
     if (q1.empty())
         return -1;
-    for(int i = 0; i < q1.size() - 1; i++)
+    int len = q1.size();
+    for(int i = 0; i < len - 1; i++)
     {
-        q2.push(q1.back());
+        q2.push(q1.front());
         q1.pop();
     }
     x = q1.back();
