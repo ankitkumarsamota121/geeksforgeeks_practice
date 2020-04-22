@@ -12,17 +12,20 @@ int main()
         stack<char> st;
         getline(cin, s);
         int len{0};
-        for (auto &a : s)
+        st.push(-1);
+        for (int i = 0; i<s.length(); i++)
         {
-            if (a == '(')
-                st.push(a);
-            else if (!st.empty())
-            {
+            if (s[i] == '(')
+                st.push(i);
+            else 
+            {   
                 st.pop();
-                len += 2;
-            }
+
+                if (!st.empty())
+                    len = max(len, i - st.top());
             else
-                len = 0;
+                st.push(i);
+            }
         }
         cout << len << endl;
     }
