@@ -143,7 +143,7 @@ void levelOrder(Node *node)
                 q.push(node->left);
             if (node->right)
                 q.push(node->right);
-                size--;
+            size--;
         }
         cout << "$ ";
     }
