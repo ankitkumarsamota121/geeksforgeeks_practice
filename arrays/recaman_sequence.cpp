@@ -33,31 +33,38 @@ ll mpow(ll base, ll exp)
     return res % mod;
 }
 
+void recaman(int n)
+{
+    int arr[n];
+
+    arr[0] = 0;
+    cout << arr[0] << ' ';
+    FOR(i, 1, n){
+        int curr = arr[i-1] - i;
+        int j;
+        FOR(j, 0, i){
+            if ((arr[j] == curr) || curr < 0){
+                curr = arr[i-1] + i;
+                break;
+            }
+        }
+
+        arr[i] = curr;
+        cout << arr[i] << ' ';
+    }
+}
+
 int main()
 {
     int t;
     cin >> t;
-    while (t--)
+    while(t--)
     {
         int n;
         cin >> n;
-        int A[n];
-        FOR(i, 0, n) cin >> A[i];
-        int m;
-
-        if (n == 2){
-            m = (A[0] + A[1]) / 2;
-        }
-
-        else{
-            int d = min(A[1] - A[0], A[2] - A[1]);
-            FOR(i, 0, n-1){
-                if (A[i+1] != A[i] + d)
-                    m = A[i] + d;
-            }
-        }
-
-        cout << m << endl;
+        recaman(n);
+        cout << endl;
     }
+
     return 0;
 }

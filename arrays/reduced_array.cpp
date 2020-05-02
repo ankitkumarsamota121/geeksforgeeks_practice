@@ -41,23 +41,10 @@ int main()
     {
         int n;
         cin >> n;
-        int A[n];
-        FOR(i, 0, n) cin >> A[i];
-        int m;
-
-        if (n == 2){
-            m = (A[0] + A[1]) / 2;
-        }
-
-        else{
-            int d = min(A[1] - A[0], A[2] - A[1]);
-            FOR(i, 0, n-1){
-                if (A[i+1] != A[i] + d)
-                    m = A[i] + d;
-            }
-        }
-
-        cout << m << endl;
+        int arr[n];
+        FOR(i, 0, n) cin >> arr[i];
+        
     }
+
     return 0;
 }

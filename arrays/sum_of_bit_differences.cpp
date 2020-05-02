@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FOREACH(i, c) for (__typeof((c).begin()) i = (c).begin(); i != (c).end(); ++i)
+#define FOREACH(i, c) for (auto &i : c)
 #define FOR(i, a, n) for (register int i = (a); i < (int)(n); ++i)
 #define FORE(i, a, n) for (i = (a); i < (int)(n); ++i)
 #define Size(n) ((int)(n).size())
@@ -43,21 +43,15 @@ int main()
         cin >> n;
         int A[n];
         FOR(i, 0, n) cin >> A[i];
-        int m;
+        int sum = 0;
 
-        if (n == 2){
-            m = (A[0] + A[1]) / 2;
-        }
-
-        else{
-            int d = min(A[1] - A[0], A[2] - A[1]);
-            FOR(i, 0, n-1){
-                if (A[i+1] != A[i] + d)
-                    m = A[i] + d;
+        FOR(i, 0, n){
+            FOR(j, i+1, n){
+                sum += bitset<4>(A[i] ^ A[j]).count();
             }
         }
-
-        cout << m << endl;
+        cout << sum * 2 << endl;
     }
+
     return 0;
 }
