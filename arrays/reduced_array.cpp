@@ -41,9 +41,21 @@ int main()
     {
         int n;
         cin >> n;
-        int arr[n];
+        vector<int> arr(n);
         FOR(i, 0, n) cin >> arr[i];
-        
+        vector<int> initial_arr = arr;
+        sort(all(arr));
+        vector<pii> reduced_dict;
+        FOR(i, 0, n) reduced_dict.pb(mk(arr[i], i));
+
+        FOR(i, 0, n){
+            int j = 0;
+            while(reduced_dict[j].F != initial_arr[i]) j++;
+            initial_arr[i] = reduced_dict[j].S;
+        }
+
+        FOR(i, 0, n) cout << initial_arr[i] << ' ';
+        cout << endl;
     }
 
     return 0;
