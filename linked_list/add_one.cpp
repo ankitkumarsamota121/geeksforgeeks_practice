@@ -81,4 +81,18 @@ struct Node
 Node *addOne(Node *head)
 {
     // Your Code here
+    int carry;
+    Node *t;
+    if (!head->next){
+        head->data += 1;
+        // return head;
+    }
+    else{
+        t = addOne(head->next);
+        carry = t->data;
+        carry /= 10;
+        t->data = t->data % 10;
+        head->data += carry;
+    }
+    return head;
 }
