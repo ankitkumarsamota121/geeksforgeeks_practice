@@ -4,3 +4,5 @@
 */*.inp
 */*.oac
 */*.out
+*.tcs
+*.bin
