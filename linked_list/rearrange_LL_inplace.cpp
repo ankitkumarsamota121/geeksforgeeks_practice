@@ -78,4 +78,19 @@ struct Node
 Node *inPlace(Node *root)
 {
     // your code goes here
+    Node *curr = root;
+    Node *p = root;
+    Node *q = NULL;
+    while(curr && curr->next){
+        p = curr;
+        while(p->next){
+            q = p;
+            p = p->next;
+        }
+        q->next = NULL;
+        p->next = curr->next;
+        curr->next = p;
+        curr = curr->next->next;
+    }
+    return root;
 }
