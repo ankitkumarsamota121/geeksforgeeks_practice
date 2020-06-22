@@ -65,5 +65,27 @@ void a_k_s() {
 int main() {
     a_k_s();
 
+    w(t) {
+        int n;
+        cin >> n;
+
+        vector<ll> a(n);
+
+        FOR(i, 0, n) {
+            cin >> a[i];
+        }
+
+        int local_max = 0;
+        int global_max = INT_MIN;
+        FOR(i, 0, n) {
+            local_max = max(a[i], a[i] + local_max);
+            if (local_max > global_max) {
+                global_max = local_max;
+            }
+        }
+
+        cout << global_max << endl;
+    }
+
     return 0;
 }
