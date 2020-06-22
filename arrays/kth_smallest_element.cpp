@@ -1,40 +1,103 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FOREACH(i, c) for (__typeof((c).begin()) i = (c).begin(); i != (c).end(); ++i)
-#define FOR(i, a, n) for (register int i = (a); i < (int)(n); ++i)
-#define FORE(i, a, n) for (i = (a); i < (int)(n); ++i)
-#define Size(n) ((int)(n).size())
-#define all(n) (n).begin(), (n).end()
+class MinHeap {
+    int *harr;
+    int capacity;
+    int heap_size;
 
-#define ll long long
-#define pb push_back
-#define error(x) cout << #x << " = " << (x) << endl;
-#define ull unsigned long long
-#define F first
-#define S second
-#define mk make_pair
-#define mod 1000000007 // 10e9 + 7
-
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define pdd pair<double, double>
-
-ll mpow(ll base, ll exp)
-{
-    ll res = 1;
-    while (exp > 0)
-    {
-        if (exp % 2)
-            res = (res * base) % mod;
-        base = (base * base) % mod;
-        exp /= 2;
+   public:
+    MinHeap(int a[], int size);
+    void MinHeapify(int i);
+    int parent(int i) {
+        return (i - 1) / 2;
     }
-    return res % mod;
+    int left(int i) {
+        return (2 * i + 1);
+    }
+    int right(int i) {
+        return (2 * i + 2);
+    }
+
+    int extractMin();
+    int getMin() {
+        return harr[0];
+    }
+};
+
+MinHeap::MinHeap(int a[], int size) {
+    heap_size = size;
+    harr = a;
+    int i = (heap_size - 1) / 2;
+    while (i >= 0) {
+        MinHeapify(i);
+        i--;
+    }
 }
 
-int main()
-{
+int MinHeap::extractMin() {
+    if (heap_size == 0) {
+        return INT_MAX;
+    }
+
+    int root = harr[0];
+
+    if (heap_size > 1) {
+        harr[0] = harr[heap_size - 1];
+        MinHeapify(0);
+    }
+    heap_size--;
+    return root;
+}
+
+void MinHeap::MinHeapify(int i) {
+    int l = left(i);
+    int r = right(i);
+    int smallest = i;
+    if (l < heap_size and harr[l] < harr[i]) {
+        smallest = l;
+    }
+    if (r < heap_size and harr[r] < harr[smallest]) {
+        smallest = r;
+    }
+    if (smallest != i) {
+        swap(harr[i], harr[smallest]);
+        MinHeapify(smallest);
+    }
+}
+
+void a_k_s() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+}
+
+int main() {
+    a_k_s();
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k;
+        cin >> n;
+
+        int a[n];
+        for (int i = 0; i < n; i++) {
+            cin >> a[i];
+        }
+
+        MinHeap mh(a, n);
+
+        cin >> k;
+        for (int i = 0; i < k - 1; i++) {
+            mh.extractMin();
+        }
+
+        cout << mh.getMin() << endl;
+    }
 
     return 0;
 }
