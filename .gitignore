@@ -1,8 +1,9 @@
 */a.out
-*/.vscode
-*/.fuse*
-*/*.inp
-*/*.oac
-*/*.out
-*.tcs
-*.bin
+*/.vscode/
+.vscode/
+*.cpp.tcs
+*.cpp.bin
+*.out
+*.prob
+*.inp
+*.oac
