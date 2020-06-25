@@ -8,13 +8,13 @@ int main() {
     while (t--) {
         string s;
         string ans;
-        int count = 0;
-        char pre_c = ' ';
         cin >> s;
 
-        stack<pair<char, int>> st;
+        int count = 1;
+        char pre_c = tolower(s[0]);
 
-        for (auto c : s) {
+        for (int i = 1; i < s.length(); i++) {
+            char c = s[i];
             c = towlower(c);
             if (c == pre_c) {
                 count++;
@@ -25,6 +25,9 @@ int main() {
                 count = 1;
             }
         }
+
+        ans += to_string(count);
+        ans += pre_c;
 
         cout << ans << endl;
     }
