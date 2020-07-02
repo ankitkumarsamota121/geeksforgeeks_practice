@@ -4,14 +4,12 @@
 using namespace std;
 
 // BST Node
-struct Node
-{
+struct Node {
     int key;
     struct Node *left;
     struct Node *right;
 
-    Node(int x)
-    {
+    Node(int x) {
         key = x;
         left = NULL;
         right = NULL;
@@ -23,62 +21,50 @@ int key = 0;
 // It sets pre and suc as predecessor and successor respectively
 void findPreSuc(Node *root, Node *&pre, Node *&suc, int key);
 
-void insert(struct Node *root, int n1, int n2, char lr)
-{
+void insert(struct Node *root, int n1, int n2, char lr) {
     if (root == NULL)
         return;
-    if (root->key == n1)
-    {
-        switch (lr)
-        {
-        case 'L':
-            root->left = new Node(n2);
-            break;
-        case 'R':
-            root->right = new Node(n2);
-            break;
+    if (root->key == n1) {
+        switch (lr) {
+            case 'L':
+                root->left = new Node(n2);
+                break;
+            case 'R':
+                root->right = new Node(n2);
+                break;
         }
-    }
-    else
-    {
+    } else {
         insert(root->left, n1, n2, lr);
         insert(root->right, n1, n2, lr);
     }
 }
 // Driver program to test above functions
-int main()
-{
+int main() {
     /* Let us construct the tree shown in above diagram */
     int t, k;
     cin >> t;
-    while (t--)
-    {
+    while (t--) {
         int n;
         cin >> n;
         struct Node *root = NULL;
         Node *pre = NULL;
         Node *suc = NULL;
-        while (n--)
-        {
+        while (n--) {
             char lr;
             int n1, n2;
             cin >> n1 >> n2;
             cin >> lr;
-            if (root == NULL)
-            {
+            if (root == NULL) {
                 root = new Node(n1);
-                switch (lr)
-                {
-                case 'L':
-                    root->left = new Node(n2);
-                    break;
-                case 'R':
-                    root->right = new Node(n2);
-                    break;
+                switch (lr) {
+                    case 'L':
+                        root->left = new Node(n2);
+                        break;
+                    case 'R':
+                        root->right = new Node(n2);
+                        break;
                 }
-            }
-            else
-            {
+            } else {
                 insert(root, n1, n2, lr);
             }
         }
@@ -100,7 +86,7 @@ int main()
                  << "-1" << endl;
     }
     return 0;
-} // } Driver Code Ends
+}  // } Driver Code Ends
 /* BST Node
 struct Node
 {
@@ -112,24 +98,19 @@ struct Node
 // This function finds predecessor and successor of key in BST.
 // It sets pre and suc as predecessor and successor respectively
 
-void findPreSuc(Node *root, Node *&pre, Node *&suc, int key)
-{
-
+void findPreSuc(Node *root, Node *&pre, Node *&suc, int key) {
     // Your code goes here
     if (root == NULL) return;
 
-    if (root->key == key)
-    {
-        if (root->left != NULL)
-        {
+    if (root->key == key) {
+        if (root->left != NULL) {
             Node *tmp = root->left;
             while (tmp->right)
                 tmp = tmp->right;
             pre = tmp;
         }
 
-        if (root->right != NULL)
-        {
+        if (root->right != NULL) {
             Node *tmp = root->right;
             while (tmp->left)
                 tmp = tmp->left;
@@ -138,13 +119,10 @@ void findPreSuc(Node *root, Node *&pre, Node *&suc, int key)
         return;
     }
 
-    if (root->key > key)
-    {
+    if (root->key > key) {
         suc = root;
         findPreSuc(root->left, pre, suc, key);
-    }
-    else
-    {
+    } else {
         pre = root;
         findPreSuc(root->right, pre, suc, key);
     }
