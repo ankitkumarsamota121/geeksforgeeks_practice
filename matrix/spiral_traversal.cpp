@@ -19,9 +19,6 @@ int main() {
 
         while (r_start <= r_end and c_start <= c_end) {
             // 1
-            // r = r_start;
-            // c = c_start;
-
             while (c <= c_end and r <= r_end) {
                 cout << mat[r][c] << ' ';
                 c++;
