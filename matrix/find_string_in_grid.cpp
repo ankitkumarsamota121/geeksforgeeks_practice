@@ -58,7 +58,6 @@ int main() {
     cin >> t;
     while (t--) {
         cin >> n >> m;
-        bool flag = true;
         for (int r = 0; r < n; r++) {
             for (int c = 0; c < m; c++) {
                 cin >> G[r][c];
@@ -77,19 +76,19 @@ int main() {
                 bool g = find7(G, s, 0, r, c);
                 bool h = find8(G, s, 0, r, c);
                 if (a or b or i or d or e or f or g or h) {
-                    flag = false;
                     v.push_back({r, c});
                 }
             }
         }
 
-        if (flag) {
+        if (v.size() == 0) {
             cout << -1 << endl;
+        } else {
+            for (auto p : v) {
+                cout << p.first << ' ' << p.second << ", ";
+            }
+            cout << endl;
         }
-        for (auto p : v) {
-            cout << p.first << ' ' << p.second << ", ";
-        }
-        cout << endl;
     }
     return 0;
 }
