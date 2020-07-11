@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int a[1005];
-int dp[1005];
+int a[100005];
+int dp[100005];
 
 int LIS(int n) {
     for (int i = 0; i <= n; i++) {
-        dp[i] = 1;
+        dp[i] = a[i];
     }
 
     int ans = 0;
@@ -14,11 +14,16 @@ int LIS(int n) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < i; j++) {
             if (a[j] < a[i]) {
-                dp[i] = max(dp[i], dp[j] + 1);
+                dp[i] = max(dp[i], dp[j] + a[i]);
             }
         }
         ans = max(dp[i], ans);
     }
+
+    // for (int i = 0; i < n; i++) {
+    //     cout << dp[i] << ' ';
+    // }
+    // cout << endl;
 
     return ans;
 }
