@@ -24,7 +24,6 @@ int main() {
     cin >> t;
     while (t--) {
         cin >> money;
-        vector<int> v;
         coinChangeGreedy(money);
     }
     return 0;
