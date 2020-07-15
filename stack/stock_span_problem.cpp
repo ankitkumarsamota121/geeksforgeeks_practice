@@ -11,22 +11,17 @@ int main() {
         for (int i = 0; i < n; i++) cin >> a[i];
 
         stack<int> s;
-        int span[805]{0};
 
         for (int i = 0; i < n; i++) {
             if (s.empty()) {
                 ans[i] = 1;
-                span[a[i]] = 1;
-                s.push(a[i]);
+                s.push(i);
             } else {
-                int cnt = 1;
-                while (!s.empty() && s.top() <= a[i]) {
-                    cnt += span[s.top()];
+                while (!s.empty() && a[s.top()] <= a[i]) {
                     s.pop();
                 }
-                s.push(a[i]);
-                ans[i] = cnt;
-                span[a[i]] = cnt;
+                ans[i] = (s.empty() ? (i + 1) : (i - s.top()));
+                s.push(i);
             }
             cout << ans[i] << ' ';
         }
