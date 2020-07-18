@@ -8,38 +8,52 @@ using namespace std;
 
 class LRUCache {
    private:
-    int C;
-    deque<int> Q;
-    unordered_map<int, int> M;
+    map<int, int> mp;
+    unordered_map<int, deque<int>::iterator> M;
+    deque<int> temp;
+    int capacity;
 
    public:
     LRUCache(int cap) {
         // constructor for cache
-        C = cap;
-        Q.clear();
+        mp.clear();
+        temp.clear();
         M.clear();
+        capacity = cap;
     }
 
     int get(int key) {
         // this function should return value corresponding to key
-        if (M.count(key) != 0) {
-            return M[key];
+        if (mp.find(key) == mp.end()) {
+            return -1;
+        } else {
+            // deque<int>::iterator itr = M[key];
+            // while (*itr != key) itr++;
+            temp.erase(M[key]);
+            temp.push_front(key);
+            M[key] = temp.begin();
+            return mp[key];
         }
-        return -1;
     }
 
     void set(int key, int value) {
         // storing key, value pair
-        if (Q.size() == C) {
-            if (M.count(key) != 0) {
-                M[key] = value;
-            } else {
-                M.erase(Q.front());
-                Q.pop_front();
+        if (mp.find(key) == mp.end()) {
+            if (temp.size() == capacity) {
+                int k = temp.back();
+                temp.pop_back();
+                mp.erase(k);
+                M.erase(k);
             }
+        } else {
+            // deque<int>::iterator itr = temp.begin();
+            // while (*itr != key) itr++;
+            temp.erase(M[key]);
+            mp.erase(key);
         }
-        Q.push_back(key);
-        M[key] = value;
+        temp.push_front(key);
+        mp[key] = value;
+        M[key] = temp.begin();
     }
 };
 
