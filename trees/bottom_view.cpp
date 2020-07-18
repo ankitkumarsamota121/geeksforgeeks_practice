@@ -116,24 +116,32 @@ struct Node
     }
 }; */
 
-void util(Node* root, int d, map<int, int>& M) {
-    // Base Case
-    if (!root)
-        return;
-
-    // Recursive Case
-    util(root->left, d - 1, M);
-    util(root->right, d + 1, M);
-    if (M.count(d) == 0)
-        M[d] = root->data;
-}
-
 // Method that returns the bottom view.
 vector<int> bottomView(Node* root) {
     // Your Code Here
     map<int, int> M;
     vector<int> V;
-    util(root, 0, M);
+
+    int d = 0;
+    queue<pair<Node*, int>> Q;
+    Q.push({root, d});
+
+    while (!Q.empty()) {
+        auto temp = Q.front();
+        Q.pop();
+
+        d = temp.second;
+        Node* node = temp.first;
+
+        M[d] = node->data;
+
+        if (node->left)
+            Q.push({node->left, d - 1});
+
+        if (node->right)
+            Q.push({node->right, d + 1});
+    }
+
     for (auto p : M)
         V.push_back(p.second);
     return V;
