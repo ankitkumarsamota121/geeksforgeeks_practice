@@ -126,26 +126,33 @@ struct Node
 };
  */
 
-void util(Node* root, int dist, map<int, vector<int>>& M) {
-    // Base Case
-    if (!root)
-        return;
-
-    // Recursive Case
-    M[dist].push_back(root->data);
-    util(root->left, dist - 1, M);
-    util(root->right, dist + 1, M);
-}
-
 // root: root node of the tree
 vector<int> verticalOrder(Node* root) {
     //Your code here
     map<int, vector<int>> M;
+    int d = 0;
     vector<int> V;
-    util(root, 0, M);
+
+    queue<pair<Node*, int>> Q;
+    Q.push({root, d});
+    while (!Q.empty()) {
+        auto temp = Q.front();
+        Q.pop();
+        d = temp.second;
+        Node* node = temp.first;
+
+        M[d].push_back(node->data);
+
+        if (node->left)
+            Q.push({node->left, d - 1});
+        if (node->right)
+            Q.push({node->right, d + 1});
+    }
+
     for (auto p : M) {
         for (auto x : p.second)
             V.push_back(x);
     }
+
     return V;
 }
