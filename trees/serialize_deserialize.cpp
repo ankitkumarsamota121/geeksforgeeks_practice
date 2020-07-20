@@ -109,21 +109,36 @@ void serialize(Node *root, vector<int> &A) {
     }
 }
 
-Node *deUtil(vector<int> &A, int idx) {
-    if (A[idx] == -1 || idx >= A.size())
-        return NULL;
-
-    Node *root = new Node(A[idx]);
-    root->left = deUtil(A, 2 * idx + 1);
-    root->right = deUtil(A, 2 * idx + 2);
-    return root;
-}
-
 /*this function deserializes
  the serialized vector A*/
 Node *deSerialize(vector<int> &A) {
     //Your code here
-    Node *root = deUtil(A, 0);
+    Node *root = new Node(A[0]);
+    queue<Node *> Q;
+    Q.push(root);
+    int i = 1;
+    while (!Q.empty() && i < A.size()) {
+        Node *t = Q.front();
+        Q.pop();
+        if (A[i] != -1) {
+            t->left = new Node(A[i]);
+            Q.push(t->left);
+        } else {
+            t->left = NULL;
+        }
+
+        i++;
+        if (i >= A.size())
+            break;
+
+        if (A[i] != -1) {
+            t->right = new Node(A[i]);
+            Q.push(t->right);
+        } else {
+            t->right = NULL;
+        }
+        i++;
+    }
     return root;
 }
 
