@@ -15,7 +15,7 @@ struct Node {
     }
 };
 
-struct Node* deleteNode(struct Node* root, int key);
+int largestBst(Node* root);
 
 // Function to Build Tree
 Node* buildTree(string str) {
@@ -77,15 +77,6 @@ Node* buildTree(string str) {
     return root;
 }
 
-void inorder(Node* root, vector<int>& v) {
-    if (root == NULL)
-        return;
-
-    inorder(root->left, v);
-    v.push_back(root->data);
-    inorder(root->right, v);
-}
-
 int main() {
     int t;
     string tc;
@@ -95,19 +86,19 @@ int main() {
         string s;
         getline(cin, s);
         Node* root1 = buildTree(s);
-        getline(cin, s);
-        int k = stoi(s);
-        root1 = deleteNode(root1, k);
-        vector<int> v;
-        inorder(root1, v);
-        for (auto i : v)
-            cout << i << " ";
+
+        //getline(cin, s);
+        // int k = stoi(s);
+        // getline(cin, s);
+
+        cout << largestBst(root1);
         cout << endl;
+        //cout<<"~"<<endl;
     }
     return 0;
 }  // } Driver Code Ends
 
-/* The structure of a BST Node is as follows:
+/* Tree node structure  used in the program
 
 struct Node {
     int data;
@@ -118,60 +109,57 @@ struct Node {
         data = val;
         left = right = NULL;
     }
-};
-*/
+};*/
 
-Node* successor(Node* root) {
-    if (!root) return NULL;
-    Node* parent = root;
-    Node* curr = root->right;
-    while (curr && curr->left) {
-        parent = curr;
-        curr = curr->left;
-    }
-    // cout << parent->data << " " << curr->data << endl;
-    if (parent == root)
-        parent->right = curr->right;
-    else
-        parent->left = curr->right;
-    return curr;
+int predecessor(Node* root) {
+    if (!root)
+        return INT_MIN;
+
+    Node* curr = root->left;
+    while (curr && curr->right)
+        curr = curr->right;
+
+    if (curr) return curr->data;
+    return INT_MIN;
 }
 
-// Return the root of the modified BST after deleting the node with value X
-Node* deleteNode(Node* root, int X) {
-    // your code goes here
-    if (!root)
-        return root;
+int successor(Node* root) {
+    if (!root) return INT_MAX;
+    Node* curr = root->right;
+    while (curr && curr->left)
+        curr = curr->left;
 
-    if (root->data == X) {
-        // 1. If it's a leaf Node
-        if (!root->left && !root->right) {
-            delete root;
-            return NULL;
-        }
+    if (curr) return curr->data;
+    return INT_MAX;
+}
 
-        // 2. Only one child
-        if (!root->left) {
-            Node* temp = root->right;
-            delete root;
-            return temp;
-        }
-        if (!root->right) {
-            Node* temp = root->left;
-            delete root;
-            return temp;
-        }
-
-        // 3. Two children
-        Node* succ = successor(root);
-        succ->left = root->left;
-        succ->right = root->right;
-        delete root;
-        return succ;
-    } else if (root->data < X) {
-        root->right = deleteNode(root->right, X);
-        return root;
+int util(Node* root, int& res) {
+    if (!root) {
+        return 0;
     }
-    root->left = deleteNode(root->left, X);
-    return root;
+
+    if (!root->left && !root->right) {
+        return 1;
+    }
+
+    int left = util(root->left, res);
+    int right = util(root->right, res);
+    if (left != -1 && right != -1) {
+        int pred = predecessor(root);
+        int succ = successor(root);
+        if (pred < root->data && succ > root->data) {
+            res = max(res, left + right + 1);
+            return left + right + 1;
+        }
+    }
+    return -1;
+}
+
+/*You are required to complete this method */
+// Return the size of the largest sub-tree which is also a BST
+int largestBst(Node* root) {
+    //Your code here
+    int res = 1;
+    util(root, res);
+    return res;
 }
